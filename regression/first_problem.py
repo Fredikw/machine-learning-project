@@ -1,5 +1,6 @@
 import numpy as np
 import os
+
 from sklearn import linear_model
 from sklearn.metrics import mean_squared_error
 
@@ -13,19 +14,17 @@ testXdata = np.load(os.getcwd()+ "/regression/test_set/Xtest_Regression_Part1.np
 # Training
 XdataTraining = Xdata[:slice_at]
 YdataTraining = Ydata[:slice_at]
-trainingReg = linear_model.LinearRegression()
-trainingReg.fit(XdataTraining,YdataTraining)
+model = linear_model.LinearRegression()
+model.fit(XdataTraining,YdataTraining)
 
-# Validation [NOT IN USE]
+# Validation
 XdataValidation = Xdata[slice_at:]
 YdataValidation = Ydata[slice_at:]
-validationReg = linear_model.LinearRegression()
-validationReg.fit(XdataValidation,YdataValidation)
+
+prediction = model.predict(XdataValidation)
+error = mean_squared_error(prediction,YdataValidation)     # Linear model yields a small error of Approx. 0.024. This indicates that the model makes good predictions
 
 # Testing
-testXdata = testXdata[:slice_at]
-testOutput = trainingReg.predict(testXdata)
+testPrediction = model.predict(testXdata)
 
-# Error checking
-error = mean_squared_error(YdataTraining,testOutput)
-print(error)
+#np.save('data.npy', testOutput)
