@@ -43,7 +43,6 @@ y_pred_XGBoost = XGBoostModel.predict(x_test_set)
 mse_xgbr = mean_squared_error(y_test_set, y_pred_XGBoost)
 
 # CatBoost Regressor
-
 '''
 CatBoostModel = CatBoostRegressor(loss_function='RMSE')
 CatBoostModel.fit(x_training_set, y_training_set)
@@ -51,7 +50,6 @@ CatBoostModel.fit(x_training_set, y_training_set)
 y_pred_CatBoost = CatBoostModel.predict(x_test_set)
 mse_catBoost = mean_squared_error(y_test_set, y_pred_CatBoost)
 '''
-
 # Stochastic Gradient Descent Regression
 
 SGDRegressorModel = SGDRegressor()
@@ -62,7 +60,7 @@ mse_SGDRegressor = mean_squared_error(y_test_set, y_pred_SGDRegressor)
 
 # Kernel Ridge Regression
 
-KernelRidgeModel = KernelRidge(alpha=1.0)
+KernelRidgeModel = KernelRidge(alpha=1.0)                   # best value is alpha = 0.0
 KernelRidgeModel.fit(x_training_set, y_training_set)
 
 y_pred_KernelRidge = KernelRidgeModel.predict(x_test_set)
@@ -114,10 +112,16 @@ print('MSE of BayesianRidge Regressor:  ', mse_BayesianRidge)
 print('MSE of GB Regressor:             ', mse_GradientBoosting)
 print('MSE of SVR Regressor:            ', mse_SVR)
 
-
-
 # TODO Find methodes for evaluation data
 
 # testXdata = np.load(os.getcwd()+ "/regression/test_set/Xtest_Regression_Part1.npy")
 # Predict y with best model
 # np.save('data.npy', testOutput)
+
+
+'''
+
+Linear regressor:  56
+Bayson regressor:  43
+
+'''
