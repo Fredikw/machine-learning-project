@@ -1,34 +1,33 @@
+
 import numpy as np
-import os
-import random
 
-import xgboost as xgb
-
-from sklearn.model_selection import train_test_split
-from sklearn import linear_model
+from xgboost import XGBRegressor
+from sklearn.svm import SVR
 #from catboost import CatBoostRegressor
+
+from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import SGDRegressor
 from sklearn.kernel_ridge import KernelRidge
 from sklearn.linear_model import ElasticNet
 from sklearn.linear_model import BayesianRidge
-from sklearn.ensemble import GradientBoostingRegressor
 
-from sklearn.svm import SVR
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
-
-
 from sklearn.metrics import mean_squared_error
 
+from os import getcwd
+
 # Data load
-x_data = np.load(os.getcwd() + "/training_set/Xtrain_Regression_Part1.npy")
-y_data = np.load(os.getcwd() + "/training_set/Ytrain_Regression_Part1.npy")
+x_data = np.load(getcwd() + "/training_set/Xtrain_Regression_Part1.npy")
+y_data = np.load(getcwd() + "/training_set/Ytrain_Regression_Part1.npy")
 
 x_training_set, x_test_set, y_training_set, y_test_set = train_test_split(x_data, y_data, test_size=10)
 
 # Linear model
 
-linearModel = linear_model.LinearRegression()
+linearModel = LinearRegression()
 linearModel.fit(x_training_set,y_training_set)
 
 y_pred_linear = linearModel.predict(x_test_set)
@@ -36,7 +35,7 @@ mse_linear = mean_squared_error(y_test_set, y_pred_linear)    #0.009726150151957
 
 # XGBoost Regressor
 
-XGBoostModel = xgb.XGBRegressor(verbosity=0)
+XGBoostModel = XGBRegressor(verbosity=0)
 XGBoostModel.fit(x_training_set, y_training_set)
 
 y_pred_XGBoost = XGBoostModel.predict(x_test_set)
@@ -75,7 +74,7 @@ ElasticNetModel.fit(x_training_set, y_training_set)
 y_pred_ElasticNet = ElasticNetModel.predict(x_test_set)
 mse_ElasticNet = mean_squared_error(y_test_set, y_pred_ElasticNet)
 
-# Bayesian Ridge Regression
+# Bayesian Ridge Regression                     better than linear 43 percent of the times
 
 BayesianRidgeModel = BayesianRidge()
 BayesianRidgeModel.fit(x_training_set, np.ravel( y_training_set))
@@ -117,11 +116,4 @@ print('MSE of SVR Regressor:            ', mse_SVR)
 # testXdata = np.load(os.getcwd()+ "/regression/test_set/Xtest_Regression_Part1.npy")
 # Predict y with best model
 # np.save('data.npy', testOutput)
-
-
-'''
-
-Linear regressor:  56
-Bayson regressor:  43
-
-'''
+# Use function to evaluate the format of your submitted data
