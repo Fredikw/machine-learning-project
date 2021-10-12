@@ -21,6 +21,8 @@ from sklearn.model_selection import cross_val_score
 
 from os import getcwd
 
+from pygam import LinearGAM
+
 
 # Data load
 x_data = np.load(getcwd() + "/regression/training_set/Xtrain_Regression_Part1.npy")
@@ -115,15 +117,16 @@ print('MSE of GB Regressor:             ', mse_GradientBoosting)
 print('MSE of SVR Regressor:            ', mse_SVR)
 '''
 
-lienar_score = cross_val_score(linearModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
+#gam = LinearGAM(n_splines=10).gridsearch(x_data, y_data)
+
 XGBoostModel_score = cross_val_score(XGBoostModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
-SGDRegressorModel_score = cross_val_score(SGDRegressorModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
+lienar_score = cross_val_score(linearModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
+SGDRegressorModel_score = cross_val_score(SGDRegressorModel, x_data, np.ravel(y_data), scoring='neg_mean_squared_error', cv=5)
 KernelRidgeModel_score = cross_val_score(KernelRidgeModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
 ElasticNetModel_score = cross_val_score(ElasticNetModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
-BayesianRidgeModel_score = cross_val_score(BayesianRidgeModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
-GBRegressorModel_score = cross_val_score(GBRegressorModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
-SVRModel_score = cross_val_score(SVRModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
-
+BayesianRidgeModel_score = cross_val_score(BayesianRidgeModel, x_data, np.ravel(y_data), scoring='neg_mean_squared_error', cv=5)
+GBRegressorModel_score = cross_val_score(GBRegressorModel, x_data, np.ravel(y_data), scoring='neg_mean_squared_error', cv=5)
+SVRModel_score = cross_val_score(SVRModel, x_data, np.ravel(y_data), scoring='neg_mean_squared_error', cv=5)
 
 print(lienar_score)
 print(XGBoostModel_score)
@@ -133,7 +136,6 @@ print(ElasticNetModel_score)
 print(BayesianRidgeModel_score)
 print(GBRegressorModel_score)
 print(SVRModel_score)
-
 
 # TODO Find methodes for evaluation data
 
