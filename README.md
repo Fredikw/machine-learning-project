@@ -34,3 +34,5 @@ https://scikit-learn.org/stable/modules/generated/sklearn.kernel_ridge.KernelRid
 
 Elastic Net Regression
 https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.ElasticNet.html
+Tuning
+https://machinelearningmastery.com/elastic-net-regression-in-python/
