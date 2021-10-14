@@ -84,7 +84,7 @@ cv = RepeatedKFold(n_splits=10, n_repeats=3, random_state=1)
 # grid['l1_ratio'] = arange(0, 1, 0.01)
 
 # # define search
-# elasticNet_search = ElasticNetCV(ElasticNetModel, grid, scoring='neg_mean_absolute_error', cv=cv, n_jobs=-1)
+# elasticNet_search = GridSearchCV(ElasticNetModel, grid, scoring='neg_mean_absolute_error', cv=cv, n_jobs=-1)
 # # perform the search
 # results = elasticNet_search.fit(x_data, y_data)
 # # summarize
