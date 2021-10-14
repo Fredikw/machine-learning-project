@@ -71,35 +71,70 @@ Tuning the hyper-parameters of an estimator
 
 '''
 
-from numpy import arange
-from sklearn.model_selection import RepeatedKFold
-from sklearn.linear_model import ElasticNetCV
+# from numpy import arange
+# from sklearn.model_selection import RepeatedKFold
+# from sklearn.linear_model import ElasticNetCV
 
 
-# Condig cross validation
-cv = RepeatedKFold(n_splits=10, n_repeats=3, random_state=1)
+# # Condig cross validation
+# cv = RepeatedKFold(n_splits=10, n_repeats=3, random_state=1)
 
-# grid = dict()
-# grid['alpha'] = [1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 0.0, 1.0, 10.0, 100.0]
-# grid['l1_ratio'] = arange(0, 1, 0.01)
+# # grid = dict()
+# # grid['alpha'] = [1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 0.0, 1.0, 10.0, 100.0]
+# # grid['l1_ratio'] = arange(0, 1, 0.01)
 
-# # define search
-# elasticNet_search = GridSearchCV(ElasticNetModel, grid, scoring='neg_mean_absolute_error', cv=cv, n_jobs=-1)
-# # perform the search
-# results = elasticNet_search.fit(x_data, y_data)
-# # summarize
-# print('Config: %s' % results.best_params_)
+# # # define search
+# # elasticNet_search = GridSearchCV(ElasticNetModel, grid, scoring='neg_mean_absolute_error', cv=cv, n_jobs=-1)
+# # # perform the search
+# # results = elasticNet_search.fit(x_data, y_data)
+# # # summarize
+# # print('Config: %s' % results.best_params_)
 
-ratios = arange(0, 1, 0.01)
-alphas = [1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 0.0, 1.0, 10.0, 100.0]
-model = ElasticNetCV(l1_ratio=ratios, alphas=alphas, cv=cv, n_jobs=-1)
-# fit model
-model.fit(x_data, y_data)
-# summarize chosen configuration
-print('alpha: %f' % model.alpha_)
-print('l1_ratio_: %f' % model.l1_ratio_)
+# ratios = arange(0, 1, 0.01)
+# alphas = [1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 0.0, 1.0, 10.0, 100.0]
+# model = ElasticNetCV(l1_ratio=ratios, alphas=alphas, cv=cv, n_jobs=-1)
+# # fit model
+# model.fit(x_data, y_data)
+# # summarize chosen configuration
+# print('alpha: %f' % model.alpha_)
+# print('l1_ratio_: %f' % model.l1_ratio_)
 
+'''
+Submission
+
+'''
 
 # testXdata = np.load(os.getcwd()+ "/regression/test_set/Xtest_Regression_Part1.npy")
 # TODO Save prediction for final regressor
 # np.save('data.npy', testOutput)
+
+
+'''
+Testing
+
+'''
+
+# linear_win = 0
+# elastic_win = 0
+
+# for i in range(10000):
+
+#     x_training_set, x_test_set, y_training_set, y_test_set = train_test_split(x_data, y_data, test_size=10)
+
+#     linearModel.fit(x_training_set, y_training_set)
+#     ElasticNetModel.fit(x_training_set, y_training_set)
+
+#     y_pred_lin = linearModel.predict(x_test_set)
+#     y_pred_elastic = ElasticNetModel.predict(x_test_set)
+
+#     mse_lin = mean_squared_error(y_test_set, y_pred_lin)
+#     mse_elastic = mean_squared_error(y_test_set, y_pred_elastic)
+
+#     if mse_lin < mse_elastic:
+#         linear_win += 1
+#     else:
+#         elastic_win += 1
+
+
+# print('Linear wins:             ', linear_win)
+# print('Elastic wins:            ', elastic_win)
