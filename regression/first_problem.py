@@ -114,27 +114,19 @@ Testing
 
 '''
 
-# linear_win = 0
-# elastic_win = 0
+# linear_wins = 0
+# elastic_wins = 0
 
-# for i in range(10000):
+# linear_score = cross_val_score(linearModel, x_data, y_data, scoring='neg_mean_squared_error', cv=10)
+# elastic_score = cross_val_score(ElasticNetModel, x_data, y_data, scoring='neg_mean_squared_error', cv=10)
 
-#     x_training_set, x_test_set, y_training_set, y_test_set = train_test_split(x_data, y_data, test_size=10)
-
-#     linearModel.fit(x_training_set, y_training_set)
-#     ElasticNetModel.fit(x_training_set, y_training_set)
-
-#     y_pred_lin = linearModel.predict(x_test_set)
-#     y_pred_elastic = ElasticNetModel.predict(x_test_set)
-
-#     mse_lin = mean_squared_error(y_test_set, y_pred_lin)
-#     mse_elastic = mean_squared_error(y_test_set, y_pred_elastic)
-
-#     if mse_lin < mse_elastic:
-#         linear_win += 1
+# for i in range(len(linear_score)):
+#     if linear_score[i] > elastic_score[i]:
+#         linear_wins += 1
 #     else:
-#         elastic_win += 1
+#         elastic_wins += 1
 
+# print('---------------------------------------------------')
+# print('Linear wins      ', linear_wins)
+# print('elastic_wins     ', elastic_wins)
 
-# print('Linear wins:             ', linear_win)
-# print('Elastic wins:            ', elastic_win)
