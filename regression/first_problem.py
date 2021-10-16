@@ -1,17 +1,17 @@
 
 import numpy as np
+import pandas as pd
 
 from xgboost import XGBRegressor
-from sklearn.svm import SVR
-import pandas as pd
 from catboost import CatBoostRegressor
 
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.kernel_ridge import KernelRidge
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import SGDRegressor
-from sklearn.kernel_ridge import KernelRidge
 from sklearn.linear_model import ElasticNet
 from sklearn.linear_model import BayesianRidge
-from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.svm import SVR
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
@@ -88,15 +88,6 @@ Tuning the hyper-parameters of an estimator
 # print('l1_ratio_: %f' % model.l1_ratio_)
 
 '''
-Submission
-
-'''
-# ElasticNetModel.fit(x_data, y_data)
-# x_data = np.load(getcwd()+ "/regression/test_set/Xtest_Regression_Part1.npy")
-# test_output = ElasticNetModel.predict(x_data)
-# np.save('regression/test_set_predictions.npy', test_output)
-
-'''
 Testing
 
 '''
@@ -116,3 +107,12 @@ Testing
 # print('---------------------------------------------------')
 # print('Linear wins      ', linear_wins)
 # print('elastic_wins     ', elastic_wins)
+
+'''
+Submission
+
+'''
+# ElasticNetModel.fit(x_data, y_data)
+# x_data = np.load(getcwd()+ "/regression/test_set/Xtest_Regression_Part1.npy")
+# test_output = ElasticNetModel.predict(x_data)
+# np.save('regression/test_set_predictions.npy', test_output)
