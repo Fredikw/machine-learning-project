@@ -66,8 +66,9 @@ ElasticNetModel = ElasticNet(alpha=0.001, l1_ratio=1)
 # SVRModel = make_pipeline(StandardScaler(), SVR(C=1.0, epsilon=0.2))
 
 '''
-Tuning the hyper-parameters of an estimator
+Tuning the hyper-parameters of an ElasticNetModel
 
+Found best parameters to be alpha=0.001, l1_ratio=1
 '''
 
 # from numpy import arange
@@ -114,8 +115,8 @@ Submission
 '''
 
 ElasticNetModel.fit(x_data, y_data)
-x_data = np.load(getcwd()+ "/regression/test_set/Xtest_Regression_Part1.npy")
-test_output = ElasticNetModel.predict(x_data)
+x_data_test = np.load(getcwd()+ "/regression/test_set/Xtest_Regression_Part1.npy")
+test_output = ElasticNetModel.predict(x_data_test)
 np.save('regression/test_set_predictions.npy', test_output)
 
 '''
