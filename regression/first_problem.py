@@ -1,6 +1,7 @@
 
 import numpy as np
 import pandas as pd
+import  matplotlib.pyplot as plt
 
 from xgboost import XGBRegressor
 from catboost import CatBoostRegressor
@@ -23,7 +24,6 @@ from sklearn.metrics import mean_squared_error
 #from sklearn.model_selection import train_test_split
 
 from os import getcwd
-from matplotlib.pyplot import show
 from seaborn import heatmap
 
 # Data load
@@ -35,11 +35,11 @@ Correlation matrix for input data
 
 '''
 
-# data = np.c_[ x_data, y_data ] 
-# df = pd.DataFrame(data)
-# corrMatrix = df.corr()
-# heatmap(corrMatrix, annot=True)
-# show()
+data = np.c_[ x_data, y_data ] 
+df = pd.DataFrame(data)
+corrMatrix = df.corr()
+heatmap(corrMatrix, annot=False)
+plt.show()
 
 '''
 Regression models
@@ -112,7 +112,20 @@ Testing
 Submission
 
 '''
-# ElasticNetModel.fit(x_data, y_data)
-# x_data = np.load(getcwd()+ "/regression/test_set/Xtest_Regression_Part1.npy")
-# test_output = ElasticNetModel.predict(x_data)
-# np.save('regression/test_set_predictions.npy', test_output)
+
+ElasticNetModel.fit(x_data, y_data)
+x_data = np.load(getcwd()+ "/regression/test_set/Xtest_Regression_Part1.npy")
+test_output = ElasticNetModel.predict(x_data)
+np.save('regression/test_set_predictions.npy', test_output)
+
+'''
+Plotting beta values
+
+'''
+
+plt.plot(ElasticNetModel.coef_, 'ro')
+plt.grid()
+plt.xlabel('feature i')
+plt.ylabel('beta')
+plt.title('ElasticNet beta')
+plt.show()
