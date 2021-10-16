@@ -41,7 +41,6 @@ Correlation matrix for input data
 # heatmap(corrMatrix, annot=True)
 # show()
 
-
 '''
 Regression models
 
@@ -58,7 +57,7 @@ linearModel = LinearRegression()
 # #Best value alpha = 0.0
 # KernelRidgeModel = KernelRidge(alpha=1.0)
 
-ElasticNetModel = ElasticNet(alpha=0.0001, l1_ratio=0.98)
+ElasticNetModel = ElasticNet(alpha=0.001, l1_ratio=1)
 
 # BayesianRidgeModel = BayesianRidge()
 
@@ -79,17 +78,6 @@ Tuning the hyper-parameters of an estimator
 # # Condig cross validation
 # cv = RepeatedKFold(n_splits=10, n_repeats=3, random_state=1)
 
-# # grid = dict()
-# # grid['alpha'] = [1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 0.0, 1.0, 10.0, 100.0]
-# # grid['l1_ratio'] = arange(0, 1, 0.01)
-
-# # # define search
-# # elasticNet_search = GridSearchCV(ElasticNetModel, grid, scoring='neg_mean_absolute_error', cv=cv, n_jobs=-1)
-# # # perform the search
-# # results = elasticNet_search.fit(x_data, y_data)
-# # # summarize
-# # print('Config: %s' % results.best_params_)
-
 # ratios = arange(0, 1, 0.01)
 # alphas = [1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 0.0, 1.0, 10.0, 100.0]
 # model = ElasticNetCV(l1_ratio=ratios, alphas=alphas, cv=cv, n_jobs=-1)
@@ -103,11 +91,10 @@ Tuning the hyper-parameters of an estimator
 Submission
 
 '''
-
-# testXdata = np.load(os.getcwd()+ "/regression/test_set/Xtest_Regression_Part1.npy")
-# TODO Save prediction for final regressor
-# np.save('data.npy', testOutput)
-
+# ElasticNetModel.fit(x_data, y_data)
+# x_data = np.load(getcwd()+ "/regression/test_set/Xtest_Regression_Part1.npy")
+# test_output = ElasticNetModel.predict(x_data)
+# np.save('regression/test_set_predictions.npy', test_output)
 
 '''
 Testing
@@ -129,4 +116,3 @@ Testing
 # print('---------------------------------------------------')
 # print('Linear wins      ', linear_wins)
 # print('elastic_wins     ', elastic_wins)
-
