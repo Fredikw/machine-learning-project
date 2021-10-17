@@ -6,6 +6,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import ElasticNet
 
 from sklearn.model_selection import cross_val_score
+from sklearn.neighbors import LocalOutlierFactor
 
 from os import getcwd
 
@@ -20,7 +21,7 @@ Regression models
 
 linearModel = LinearRegression()
 
-#ElasticNetModel = ElasticNet(alpha=0.001, l1_ratio=1)
+# ElasticNetModel = ElasticNet(alpha=0.001, l1_ratio=1)
 
 '''
 Removing outliers from data sample
@@ -30,6 +31,8 @@ Removing outliers from data sample
 # MSE of raw data
 linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
 print(linearModel_score)
+
+# Method 1
 
 linearModel.fit(x_data, y_data)
 
@@ -55,13 +58,26 @@ for idx, outlier in enumerate(outlier_list):
     x_data = np.delete(x_data, outlier, 0)
     y_data = np.delete(y_data, outlier, 0)
 
-# linearModel.fit(x_data, y_data)
+linearModel.fit(x_data, y_data)
 
-# prediciton          = linearModel.predict(x_data)
-# distance_from_mean  = prediciton - y_data
+prediciton          = linearModel.predict(x_data)
+distance_from_mean  = prediciton - y_data
 
 # plt.plot(distance_from_mean, 'ro')
 # plt.show()
 
 linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
 print(linearModel_score)
+
+# # Methode 2
+
+# lof = LocalOutlierFactor()
+# outlier_candidates = lof.fit_predict(x_data)
+
+# mask = outlier_candidates != -1
+
+# x_data = x_data[mask, :]
+# y_data = y_data[mask]
+
+# linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
+# print(linearModel_score)
