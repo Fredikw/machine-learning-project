@@ -43,7 +43,7 @@ tol = 2
 
 outlier_list = []
 
-for i in range(len(x_data)):
+for i in range(len(distance_from_mean)):
 
     if abs(distance_from_mean[i]) > tol:
         outlier_list.append(i)
