@@ -72,9 +72,15 @@ print(linearModel_score)
 # # Methode 2
 
 # lof = LocalOutlierFactor()
-# outlier_candidates = lof.fit_predict(x_data)
+# outlier_candidates = lof.fit_predict(y_data)
 
 # mask = outlier_candidates != -1
+
+# # Outlier indices
+# # 7 
+# # 16
+# # 57
+# # 85
 
 # x_data = x_data[mask, :]
 # y_data = y_data[mask]
