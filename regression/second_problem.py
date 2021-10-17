@@ -36,8 +36,8 @@ linearModel.fit(x_data, y_data)
 prediciton          = linearModel.predict(x_data)
 distance_from_mean  = prediciton - y_data
 
-plt.plot(distance_from_mean, 'ro')
-plt.show()
+# plt.plot(distance_from_mean, 'ro')
+# plt.show()
 
 tol = 2
 
@@ -55,10 +55,13 @@ for idx, outlier in enumerate(outlier_list):
     x_data = np.delete(x_data, outlier, 0)
     y_data = np.delete(y_data, outlier, 0)
 
-plt.plot(distance_from_mean, 'ro')
-plt.show()
+# linearModel.fit(x_data, y_data)
+
+# prediciton          = linearModel.predict(x_data)
+# distance_from_mean  = prediciton - y_data
+
+# plt.plot(distance_from_mean, 'ro')
+# plt.show()
 
 linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
 print(linearModel_score)
-
-print(outlier_list)
