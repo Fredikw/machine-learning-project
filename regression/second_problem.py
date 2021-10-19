@@ -3,10 +3,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import ElasticNet
+# from sklearn.linear_model import ElasticNet
 
 from sklearn.model_selection import cross_val_score
-from sklearn.neighbors import LocalOutlierFactor
+# from sklearn.neighbors import LocalOutlierFactor
+
+from math import inf
 
 from os import getcwd
 
@@ -32,58 +34,94 @@ Removing outliers from data sample
 linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
 print(linearModel_score)
 
-# Method 1
+data = np.c_[ x_data, y_data ]
 
-linearModel.fit(x_data, y_data)
 
-prediciton          = linearModel.predict(x_data)
-distance_from_mean  = prediciton - y_data
+# # Method 1
 
-# plt.plot(distance_from_mean, 'ro')
-# plt.show()
+# linearModel.fit(x_data, y_data)
 
-tol = 2
+# prediciton          = linearModel.predict(x_data)
+# distance_from_mean  = prediciton - y_data
 
-outlier_list = []
+# # plt.plot(distance_from_mean, 'ro')
+# # plt.show()
 
-for idx, distance in enumerate(distance_from_mean):
+# tol = 2
 
-    if abs(distance) > tol:
-        outlier_list.append(idx)
+# outlier_list = []
 
-for idx, outlier in enumerate(outlier_list):
+# for idx, distance in enumerate(distance_from_mean):
 
-    outlier -= idx
+#     if abs(distance) > tol:
+#         outlier_list.append(idx)
 
-    x_data = np.delete(x_data, outlier, 0)
-    y_data = np.delete(y_data, outlier, 0)
+# for idx, outlier in enumerate(outlier_list):
 
-linearModel.fit(x_data, y_data)
+#     outlier -= idx
 
-prediciton          = linearModel.predict(x_data)
-distance_from_mean  = prediciton - y_data
-
-# plt.plot(distance_from_mean, 'ro')
-# plt.show()
-
-linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
-print(linearModel_score)
-
-# # Methode 2
-
-# lof = LocalOutlierFactor()
-# outlier_candidates = lof.fit_predict(y_data)
-
-# mask = outlier_candidates != -1
-
-# # Outlier indices
-# # 7 
-# # 16
-# # 57
-# # 85
-
-# x_data = x_data[mask, :]
-# y_data = y_data[mask]
+#     x_data = np.delete(x_data, outlier, 0)
+#     y_data = np.delete(y_data, outlier, 0)
 
 # linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
 # print(linearModel_score)
+
+
+# # Methode 2
+
+# # LocalOutlierFactor
+
+
+# Method 3
+
+# # Manual evaluation of outliers
+
+# data = np.c_[ x_data, y_data ]
+
+# for column in range(len(data.T)):
+
+#     y_data = data[:, column]
+
+#     x_data = np.delete(data, column, 1)
+    
+#     linearModel = LinearRegression()
+#     linearModel.fit(x_data, y_data)
+
+#     prediciton          = linearModel.predict(x_data)
+#     distance_from_mean  = prediciton - y_data
+
+#     plt.plot(distance_from_mean, 'ro')
+#     plt.title('feature ' + str(column))
+#     plt.show()
+
+# # Removing outliers
+
+# tol = [3, inf, inf, inf, 3, 2.5, inf, inf, 3, inf, inf, 3, inf, inf, inf, inf, inf, inf, inf, inf, 4]
+# # tol = [3, 2, 2, 4, 1.5, 1.5, 2, 2, 2, inf, inf, 1, inf, 2, inf, 2, 2, 2, 2, inf, 2]
+
+# outlier_list = []
+
+# for column in range(len(data.T)):
+
+#     y_data = data[:, column]
+
+#     x_data = np.delete(data, column, 1)
+    
+#     linearModel = LinearRegression()
+#     linearModel.fit(x_data, y_data)
+
+#     prediciton          = linearModel.predict(x_data)
+#     distance_from_mean  = prediciton - y_data
+    
+#     for idx, distance in enumerate(distance_from_mean):
+
+#         if abs(distance) > tol[column]:
+#             outlier_list.append(idx)
+
+
+# for idx, outlier in enumerate(outlier_list):
+
+#     outlier -= idx
+
+#     x_data = np.delete(x_data, outlier, 0)
+#     y_data = np.delete(y_data, outlier, 0)
