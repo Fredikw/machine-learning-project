@@ -1,3 +1,4 @@
+import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -11,10 +12,22 @@ from sklearn.neighbors import LocalOutlierFactor
 
 from math import inf
 from os import getcwd
+from seaborn import heatmap
 
 # Data load
 x_data = np.load(getcwd() + "/training_set/Xtrain_Regression_Part2.npy")
 y_data = np.load(getcwd() + "/training_set/Ytrain_Regression_Part2.npy")
+
+'''
+Correlation matrix for input data
+
+'''
+
+data = np.c_[ x_data, y_data ] 
+df = pd.DataFrame(data)
+corrMatrix = df.corr()
+heatmap(corrMatrix, annot=False)
+plt.show()
 
 '''
 Regression models
@@ -68,6 +81,8 @@ for idx, outlier in enumerate(outliers):
 
     x_data = np.delete(x_data, outlier, 0)
     y_data = np.delete(y_data, outlier, 0)
+
+# Testing
 
 linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring="neg_mean_squared_error", cv=5)
 print(linearModel_score)
@@ -126,6 +141,8 @@ for idx, outlier in enumerate(outliers):
     x_data = np.delete(x_data, outlier, 0)
     y_data = np.delete(y_data, outlier, 0)
 
+
+# Testing
 
 linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring="neg_mean_squared_error", cv=5)
 print(linearModel_score)
