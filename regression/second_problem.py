@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+from utils import get_unique_elements
+
 from sklearn.linear_model import LinearRegression
 # from sklearn.linear_model import ElasticNet
 
@@ -27,7 +29,6 @@ linearModel = LinearRegression()
 Removing outliers from data sample
 
 '''
-
 
 # # MSE of raw data
 # linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
@@ -58,10 +59,8 @@ for idx, distance in enumerate(distance_from_mean):
     if abs(distance) > cut_off:
         outliers.append(idx)
 
-outliers = set(outliers)
-outliers = sorted(list(outliers))
-
-print(outliers)
+outliers = get_unique_elements(outliers)
+outliers = np.sort(outliers)
 
 for idx, outlier in enumerate(outliers):
 
