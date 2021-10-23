@@ -4,9 +4,11 @@ import matplotlib.pyplot as plt
 from utils import get_unique_elements
 
 from sklearn.linear_model import LinearRegression
+
 # from sklearn.linear_model import ElasticNet
 
 from sklearn.model_selection import cross_val_score
+
 # from sklearn.neighbors import LocalOutlierFactor
 
 from math import inf
@@ -41,8 +43,8 @@ data = np.c_[x_data, y_data]
 
 linearModel.fit(x_data, y_data)
 
-prediciton          = linearModel.predict(x_data)
-distance_from_mean  = prediciton - y_data
+prediciton = linearModel.predict(x_data)
+distance_from_mean = prediciton - y_data
 
 # plt.plot(distance_from_mean, 'ro')
 # plt.show()
@@ -69,7 +71,7 @@ for idx, outlier in enumerate(outliers):
     x_data = np.delete(x_data, outlier, 0)
     y_data = np.delete(y_data, outlier, 0)
 
-linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
+linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring="neg_mean_squared_error", cv=5)
 print(linearModel_score)
 
 
@@ -94,10 +96,10 @@ for idx in range(columns):
     linearModel = LinearRegression()
     linearModel.fit(x_data, y_data)
 
-    prediciton          = linearModel.predict(x_data)
-    distance_from_mean  = prediciton - y_data
+    prediciton = linearModel.predict(x_data)
+    distance_from_mean = prediciton - y_data
 
-    # Using Standard Deviation Method
+    # Method 1: Standard Deviation Method
 
     data_mean, data_std = np.mean(distance_from_mean), np.std(distance_from_mean)
 
@@ -113,8 +115,8 @@ for idx in range(columns):
     # plt.title('feature ' + str(column))
     # plt.show()
 
-outliers = set(outliers)
-outliers = sorted(list(outliers))
+outliers = get_unique_elements(outliers)
+outliers = np.sort(outliers)
 
 # Remove outliers
 
@@ -128,5 +130,10 @@ for idx, outlier in enumerate(outliers):
     x_data = np.delete(x_data, outlier, 0)
     y_data = np.delete(y_data, outlier, 0)
 
-linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
+linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring="neg_mean_squared_error", cv=5)
 print(linearModel_score)
+
+
+# # Method 2 with the Standard Deviation Method results
+# # in the following outliers
+# # [ 7 23 36 42 78 85 92]
