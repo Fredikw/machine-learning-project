@@ -1,4 +1,3 @@
-
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -9,7 +8,6 @@ from sklearn.model_selection import cross_val_score
 # from sklearn.neighbors import LocalOutlierFactor
 
 from math import inf
-
 from os import getcwd
 
 # Data load
@@ -30,41 +28,50 @@ Removing outliers from data sample
 
 '''
 
-# MSE of raw data
-linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
-print(linearModel_score)
 
-data = np.c_[ x_data, y_data ]
-
-
-# # Method 1
-
-# linearModel.fit(x_data, y_data)
-
-# prediciton          = linearModel.predict(x_data)
-# distance_from_mean  = prediciton - y_data
-
-# # plt.plot(distance_from_mean, 'ro')
-# # plt.show()
-
-# tol = 2
-
-# outlier_list = []
-
-# for idx, distance in enumerate(distance_from_mean):
-
-#     if abs(distance) > tol:
-#         outlier_list.append(idx)
-
-# for idx, outlier in enumerate(outlier_list):
-
-#     outlier -= idx
-
-#     x_data = np.delete(x_data, outlier, 0)
-#     y_data = np.delete(y_data, outlier, 0)
-
+# # MSE of raw data
 # linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
 # print(linearModel_score)
+
+data = np.c_[x_data, y_data]
+
+
+# Method 1
+
+linearModel.fit(x_data, y_data)
+
+prediciton          = linearModel.predict(x_data)
+distance_from_mean  = prediciton - y_data
+
+# plt.plot(distance_from_mean, 'ro')
+# plt.show()
+
+data_std = np.std(distance_from_mean)
+
+standard_diviations = 2
+cut_off = data_std * standard_diviations
+
+outliers = []
+
+for idx, distance in enumerate(distance_from_mean):
+
+    if abs(distance) > cut_off:
+        outliers.append(idx)
+
+outliers = set(outliers)
+outliers = sorted(list(outliers))
+
+print(outliers)
+
+for idx, outlier in enumerate(outliers):
+
+    outlier -= idx
+
+    x_data = np.delete(x_data, outlier, 0)
+    y_data = np.delete(y_data, outlier, 0)
+
+linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
+print(linearModel_score)
 
 
 # # Methode 2
@@ -74,54 +81,53 @@ data = np.c_[ x_data, y_data ]
 
 # Method 3
 
-# Manual evaluation of outliers
+columns = data.shape[1]
 
-data = np.c_[ x_data, y_data ]
+outliers = []
 
-for column in range(len(data.T)):
+# Identify outliers
 
-    y_data = data[:, column]
+for idx in range(columns):
 
-    x_data = np.delete(data, column, 1)
-    
+    y_data = data[:, idx]
+    x_data = np.delete(data, idx, 1)
+
     linearModel = LinearRegression()
     linearModel.fit(x_data, y_data)
 
     prediciton          = linearModel.predict(x_data)
     distance_from_mean  = prediciton - y_data
 
-    plt.plot(distance_from_mean, 'ro')
-    plt.title('feature ' + str(column))
-    plt.show()
+    # Using Standard Deviation Method
 
-# Removing outliers
+    data_mean, data_std = np.mean(distance_from_mean), np.std(distance_from_mean)
 
-tol = [3, inf, inf, inf, 3, 2.5, inf, inf, 3, inf, inf, 3, inf, inf, inf, inf, inf, inf, inf, inf, 4]
-# tol = [3, 2, 2, 4, 1.5, 1.5, 2, 2, 2, inf, inf, 1, inf, 2, inf, 2, 2, 2, 2, inf, 2]
+    standard_diviations = 3
+    cut_off = data_std * standard_diviations
 
-outlier_list = []
-
-for column in range(len(data.T)):
-
-    y_data = data[:, column]
-
-    x_data = np.delete(data, column, 1)
-    
-    linearModel = LinearRegression()
-    linearModel.fit(x_data, y_data)
-
-    prediciton          = linearModel.predict(x_data)
-    distance_from_mean  = prediciton - y_data
-    
     for idx, distance in enumerate(distance_from_mean):
 
-        if abs(distance) > tol[column]:
-            outlier_list.append(idx)
+        if abs(distance) > cut_off:
+            outliers.append(idx)
 
+    # plt.plot(distance_from_mean, 'ro')
+    # plt.title('feature ' + str(column))
+    # plt.show()
 
-# for idx, outlier in enumerate(outlier_list):
+outliers = set(outliers)
+outliers = sorted(list(outliers))
 
-#     outlier -= idx
+# Remove outliers
 
-#     x_data = np.delete(x_data, outlier, 0)
-#     y_data = np.delete(y_data, outlier, 0)
+x_data = np.load(getcwd() + "/training_set/Xtrain_Regression_Part2.npy")
+y_data = np.load(getcwd() + "/training_set/Ytrain_Regression_Part2.npy")
+
+for idx, outlier in enumerate(outliers):
+
+    outlier -= idx
+
+    x_data = np.delete(x_data, outlier, 0)
+    y_data = np.delete(y_data, outlier, 0)
+
+linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring='neg_mean_squared_error', cv=5)
+print(linearModel_score)
