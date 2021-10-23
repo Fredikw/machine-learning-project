@@ -13,8 +13,8 @@ from math import inf
 from os import getcwd
 
 # Data load
-x_data = np.load(getcwd() + "/regression/training_set/Xtrain_Regression_Part2.npy")
-y_data = np.load(getcwd() + "/regression/training_set/Ytrain_Regression_Part2.npy")
+x_data = np.load(getcwd() + "/training_set/Xtrain_Regression_Part2.npy")
+y_data = np.load(getcwd() + "/training_set/Ytrain_Regression_Part2.npy")
 
 '''
 Regression models
@@ -74,49 +74,49 @@ data = np.c_[ x_data, y_data ]
 
 # Method 3
 
-# # Manual evaluation of outliers
+# Manual evaluation of outliers
 
-# data = np.c_[ x_data, y_data ]
+data = np.c_[ x_data, y_data ]
 
-# for column in range(len(data.T)):
+for column in range(len(data.T)):
 
-#     y_data = data[:, column]
+    y_data = data[:, column]
 
-#     x_data = np.delete(data, column, 1)
+    x_data = np.delete(data, column, 1)
     
-#     linearModel = LinearRegression()
-#     linearModel.fit(x_data, y_data)
+    linearModel = LinearRegression()
+    linearModel.fit(x_data, y_data)
 
-#     prediciton          = linearModel.predict(x_data)
-#     distance_from_mean  = prediciton - y_data
+    prediciton          = linearModel.predict(x_data)
+    distance_from_mean  = prediciton - y_data
 
-#     plt.plot(distance_from_mean, 'ro')
-#     plt.title('feature ' + str(column))
-#     plt.show()
+    plt.plot(distance_from_mean, 'ro')
+    plt.title('feature ' + str(column))
+    plt.show()
 
-# # Removing outliers
+# Removing outliers
 
-# tol = [3, inf, inf, inf, 3, 2.5, inf, inf, 3, inf, inf, 3, inf, inf, inf, inf, inf, inf, inf, inf, 4]
-# # tol = [3, 2, 2, 4, 1.5, 1.5, 2, 2, 2, inf, inf, 1, inf, 2, inf, 2, 2, 2, 2, inf, 2]
+tol = [3, inf, inf, inf, 3, 2.5, inf, inf, 3, inf, inf, 3, inf, inf, inf, inf, inf, inf, inf, inf, 4]
+# tol = [3, 2, 2, 4, 1.5, 1.5, 2, 2, 2, inf, inf, 1, inf, 2, inf, 2, 2, 2, 2, inf, 2]
 
-# outlier_list = []
+outlier_list = []
 
-# for column in range(len(data.T)):
+for column in range(len(data.T)):
 
-#     y_data = data[:, column]
+    y_data = data[:, column]
 
-#     x_data = np.delete(data, column, 1)
+    x_data = np.delete(data, column, 1)
     
-#     linearModel = LinearRegression()
-#     linearModel.fit(x_data, y_data)
+    linearModel = LinearRegression()
+    linearModel.fit(x_data, y_data)
 
-#     prediciton          = linearModel.predict(x_data)
-#     distance_from_mean  = prediciton - y_data
+    prediciton          = linearModel.predict(x_data)
+    distance_from_mean  = prediciton - y_data
     
-#     for idx, distance in enumerate(distance_from_mean):
+    for idx, distance in enumerate(distance_from_mean):
 
-#         if abs(distance) > tol[column]:
-#             outlier_list.append(idx)
+        if abs(distance) > tol[column]:
+            outlier_list.append(idx)
 
 
 # for idx, outlier in enumerate(outlier_list):

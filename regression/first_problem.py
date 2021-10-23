@@ -27,8 +27,8 @@ from os import getcwd
 from seaborn import heatmap
 
 # Data load
-x_data = np.load(getcwd() + "/regression/training_set/Xtrain_Regression_Part1.npy")
-y_data = np.load(getcwd() + "/regression/training_set/Ytrain_Regression_Part1.npy")
+x_data = np.load(getcwd() + "/training_set/Xtrain_Regression_Part1.npy")
+y_data = np.load(getcwd() + "/training_set/Ytrain_Regression_Part1.npy")
 
 '''
 Correlation matrix for input data
@@ -115,9 +115,9 @@ Submission
 '''
 
 ElasticNetModel.fit(x_data, y_data)
-x_data_test = np.load(getcwd()+ "/regression/test_set/Xtest_Regression_Part1.npy")
+x_data_test = np.load(getcwd()+ "/test_set/Xtest_Regression_Part1.npy")
 test_output = ElasticNetModel.predict(x_data_test)
-np.save('regression/test_set_predictions.npy', test_output)
+np.save('test_set_predictions.npy', test_output)
 
 '''
 Plotting beta values
