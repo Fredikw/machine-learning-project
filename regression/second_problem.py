@@ -8,8 +8,7 @@ from sklearn.linear_model import LinearRegression
 # from sklearn.linear_model import ElasticNet
 
 from sklearn.model_selection import cross_val_score
-
-# from sklearn.neighbors import LocalOutlierFactor
+from sklearn.neighbors import LocalOutlierFactor
 
 from math import inf
 from os import getcwd
@@ -75,65 +74,65 @@ linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring="neg_me
 print(linearModel_score)
 
 
-# # Methode 2
+# # Method 2
 
-# # LocalOutlierFactor
+# columns = data.shape[1]
 
+# outliers = []
 
-# Method 3
+# # Identify outliers
 
-columns = data.shape[1]
+# for idx in range(columns):
 
-outliers = []
+#     y_data = data[:, idx]
+#     x_data = np.delete(data, idx, 1)
 
-# Identify outliers
+#     linearModel = LinearRegression()
+#     linearModel.fit(x_data, y_data)
 
-for idx in range(columns):
+#     prediciton = linearModel.predict(x_data)
+#     distance_from_mean = prediciton - y_data
 
-    y_data = data[:, idx]
-    x_data = np.delete(data, idx, 1)
+#     # Method 1: Standard Deviation Method
 
-    linearModel = LinearRegression()
-    linearModel.fit(x_data, y_data)
+#     data_mean, data_std = np.mean(distance_from_mean), np.std(distance_from_mean)
 
-    prediciton = linearModel.predict(x_data)
-    distance_from_mean = prediciton - y_data
+#     standard_diviations = 3
+#     cut_off = data_std * standard_diviations
 
-    # Method 1: Standard Deviation Method
+#     for idx, distance in enumerate(distance_from_mean):
 
-    data_mean, data_std = np.mean(distance_from_mean), np.std(distance_from_mean)
+#         if abs(distance) > cut_off:
+#             outliers.append(idx)
 
-    standard_diviations = 3
-    cut_off = data_std * standard_diviations
+#     # plt.plot(distance_from_mean, 'ro')
+#     # plt.title('feature ' + str(column))
+#     # plt.show()
 
-    for idx, distance in enumerate(distance_from_mean):
+# outliers = get_unique_elements(outliers)
+# outliers = np.sort(outliers)
 
-        if abs(distance) > cut_off:
-            outliers.append(idx)
+# # Remove outliers
 
-    # plt.plot(distance_from_mean, 'ro')
-    # plt.title('feature ' + str(column))
-    # plt.show()
+# x_data = np.load(getcwd() + "/training_set/Xtrain_Regression_Part2.npy")
+# y_data = np.load(getcwd() + "/training_set/Ytrain_Regression_Part2.npy")
 
-outliers = get_unique_elements(outliers)
-outliers = np.sort(outliers)
+# for idx, outlier in enumerate(outliers):
 
-# Remove outliers
+#     outlier -= idx
 
-x_data = np.load(getcwd() + "/training_set/Xtrain_Regression_Part2.npy")
-y_data = np.load(getcwd() + "/training_set/Ytrain_Regression_Part2.npy")
+#     x_data = np.delete(x_data, outlier, 0)
+#     y_data = np.delete(y_data, outlier, 0)
 
-for idx, outlier in enumerate(outliers):
-
-    outlier -= idx
-
-    x_data = np.delete(x_data, outlier, 0)
-    y_data = np.delete(y_data, outlier, 0)
-
-linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring="neg_mean_squared_error", cv=5)
-print(linearModel_score)
+# linearModel_score = cross_val_score(linearModel, x_data, y_data, scoring="neg_mean_squared_error", cv=5)
+# print(linearModel_score)
 
 
 # # Method 2 with the Standard Deviation Method results
 # # in the following outliers
 # # [ 7 23 36 42 78 85 92]
+
+
+# Methode 3
+
+# Unsupervised Outlier Detection using Local Outlier Factor
