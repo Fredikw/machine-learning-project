@@ -12,6 +12,8 @@ from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import cross_val_score, train_test_split
 # from sklearn.metrics import confusion_matrix
 
+from sklearn.model_selection import GridSearchCV
+
 
 '''
 Loading data
@@ -40,11 +42,30 @@ Classification models
 
 '''
 
-SGD = SGDClassifier(max_iter = 1000, tol=1e-3,penalty = "elasticnet")
+SGD = SGDClassifier(loss='squared_hinge', max_iter = 1000, tol=1e-3,penalty = "l1")
 
 # With cross validation
 
-SGD_score = cross_val_score(SGD, x_data, y_data, scoring='accuracy', cv=5) # performance: [0.84727552 0.82041443 0.84497314 0.84101382 0.73732719]
+SGD_score = cross_val_score(SGD, x_data, y_data, scoring='accuracy', cv=5) # performance: [0.83269378 0.85188028 0.84497314 0.83947773 0.83256528]
+
+
+'''
+Tuning classifier
+
+
+'''
+
+# params = {
+#     "loss" : ["hinge", "log", "squared_hinge", "modified_huber"],
+#     "alpha" : [0.0001, 0.001, 0.01, 0.1],
+#     "penalty" : ["l2", "l1", "none"],
+# }
+
+# model = GridSearchCV(SGD, params) # {'alpha': 0.0001, 'loss': 'squared_hinge', 'penalty': 'l1'}
+# model.fit(x_data, y_data)
+
+# print(model.best_params_)
+
 
 '''
 confusion matrix
