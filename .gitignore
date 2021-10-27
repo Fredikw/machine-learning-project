@@ -1,3 +1,5 @@
 /regression/catboost_info/
 /regression/__pycache__/
 /regression/*.pyc
+/classification/__pycache__/
+/classification/*.pyc
