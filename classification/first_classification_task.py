@@ -10,6 +10,8 @@ from utils import *
 
 from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import cross_val_score, train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+
 # from sklearn.metrics import confusion_matrix
 
 from sklearn.model_selection import GridSearchCV
@@ -42,18 +44,26 @@ Classification models
 
 '''
 
-SGD = SGDClassifier(loss='squared_hinge', max_iter = 1000, tol=1e-3,penalty = "l1")
+# SGD = SGDClassifier(loss='squared_hinge', max_iter = 1000, tol=1e-3,penalty = "l1")
 
-# With cross validation
+# # With cross validation
 
-SGD_score = cross_val_score(SGD, x_data, y_data, scoring='accuracy', cv=5) # performance: [0.83269378 0.85188028 0.84497314 0.83947773 0.83256528]
+# SGD_score = cross_val_score(SGD, x_data, y_data, scoring='accuracy', cv=5) # performance: [0.83269378 0.85188028 0.84497314 0.83947773 0.83256528]
 
+KNN = KNeighborsClassifier()
+
+# KNN_score = cross_val_score(KNN, x_data, y_data, scoring='accuracy', cv=5)
+
+# print(KNN_score)
 
 '''
 Tuning classifier
 
 
 '''
+
+# # Tuning SGD
+
 
 # params = {
 #     "loss" : ["hinge", "log", "squared_hinge", "modified_huber"],
@@ -65,6 +75,26 @@ Tuning classifier
 # model.fit(x_data, y_data)
 
 # print(model.best_params_)
+
+# # Tuning KNN
+
+k_range = list(range(1, 31))
+
+params = {
+    "n_neighbors" : k_range,
+    "weights" : ['uniform', 'distance'],
+    "algorithm" : ['auto', 'ball_tree', 'kd_tree', 'brute'],
+    "leaf_size" : [20, 30, 40],
+    "p" : [1, 2]
+}
+
+# defining parameter range
+grid = GridSearchCV(KNN, params, cv=10, scoring='accuracy', return_train_score=False,verbose=1)
+
+# fitting the model for grid search
+grid_search=grid.fit(x_data, y_data)
+
+print(grid_search.best_params_)
 
 
 '''
