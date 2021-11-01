@@ -95,7 +95,6 @@ CNN.evaluate(x_test_set, y_test_set) # accuracy: 0.8300
 '''
 Tuning classifier
 
-
 '''
 
 # # Tuning SGD
