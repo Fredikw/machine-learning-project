@@ -76,6 +76,7 @@ y_test_set = to_one_hot_enc(y_test_set)
 CNN = keras.Sequential([
     keras.layers.Conv2D(64, 3, activation='relu', input_shape=(50,50,1)),
     keras.layers.Conv2D(32, 3, activation='relu'),
+    # keras.layers.Conv2D(16, 3, activation='relu'),
     keras.layers.MaxPool2D(2,2),
     # keras.layers.Dropout(0.5),
     keras.layers.Flatten(),
