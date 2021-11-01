@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def to_one_hot_enc(arr):
 
     one_hot_enc = []
@@ -14,6 +15,7 @@ def to_one_hot_enc(arr):
     
     return np.array(one_hot_enc)
 
+
 def from_one_hot_enc(arr):
 
     arr_list = []
@@ -26,6 +28,7 @@ def from_one_hot_enc(arr):
             arr_list.append(0)
     
     return np.array(arr_list)
+
 
 def reshape_images(arr):
 
