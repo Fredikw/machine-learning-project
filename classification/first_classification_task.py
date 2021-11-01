@@ -12,9 +12,6 @@ from sklearn.model_selection import (GridSearchCV, cross_val_score, train_test_s
 from tensorflow import keras
 
 
-
-
-
 '''
 Preparing data 
 
