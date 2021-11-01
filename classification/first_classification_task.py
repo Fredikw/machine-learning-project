@@ -39,6 +39,7 @@ Show image
 
 # imshow(x_data[20])
 
+
 '''
 Classification models
 
