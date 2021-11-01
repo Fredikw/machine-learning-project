@@ -84,6 +84,8 @@ CNN = keras.Sequential([
     keras.layers.Dense(2, activation='softmax')
 ])
 
+# TODO implement early stopping
+
 CNN.compile(loss='binary_crossentropy',
             optimizer='adam',
             metrics=['accuracy'])
