@@ -29,13 +29,12 @@ Evaluate data
 
 '''
 
-num_sample_of_each = np.bincount(y_data.astype(int)) # [2769 3701]
+num_of_men, num_of_women = samples_in_class_count(y_data)
 
-print('Share of women: ', num_sample_of_each[0]/(num_sample_of_each[0]+num_sample_of_each[1]))
-print('Share of men:   ', num_sample_of_each[1]/(num_sample_of_each[0]+num_sample_of_each[1]))
+print('Share of men:   ', num_of_men)
+print('Share of women: ', num_of_women)
 print('Did you just assume my gender?')
 
-pass
 
 '''
 Show image
