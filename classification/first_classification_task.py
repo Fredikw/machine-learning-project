@@ -25,6 +25,19 @@ x_training_set, x_test_set, y_training_set, y_test_set = train_test_split(x_data
 
 
 '''
+Evaluate data
+
+'''
+
+num_sample_of_each = np.bincount(y_data.astype(int)) # [2769 3701]
+
+print('Share of women: ', num_sample_of_each[0]/(num_sample_of_each[0]+num_sample_of_each[1]))
+print('Share of men:   ', num_sample_of_each[1]/(num_sample_of_each[0]+num_sample_of_each[1]))
+print('Did you just assume my gender?')
+
+pass
+
+'''
 Show image
 
 '''
