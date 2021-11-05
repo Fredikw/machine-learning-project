@@ -35,8 +35,8 @@ Show image
 #     plt.imshow(img,cmap='gray')
 #     show()
 
-# print(y_data[1964])
-# imshow(x_data[1964])
+# print(y_data[10])
+# imshow(x_data[10])
 
 '''
 Classification models
@@ -62,23 +62,21 @@ Classification models
 # MLP_score = cross_val_score(MLP, x_data, y_data, scoring='accuracy', cv=5)
 
 
-# CNN classifier
+# # CNN classifier
 
 x_training_set = reshape_images(x_training_set)
 x_training_set = x_training_set.reshape(5823,50,50,1)
 
+y_training_set = to_one_hot_enc(y_training_set)
+
 x_test_set = reshape_images(x_test_set)
 x_test_set = x_test_set.reshape(647,50,50,1)
 
-y_training_set = to_one_hot_enc(y_training_set)
-
-y_test_set = to_one_hot_enc(y_test_set)
-
 CNN = keras.Sequential([
-    keras.layers.Conv2D(64, 3, activation='relu', input_shape=(50,50,1)),
-    keras.layers.Conv2D(32, 3, activation='relu'),
-    # keras.layers.Conv2D(16, 3, activation='relu'),
-    keras.layers.MaxPool2D(2,2),
+    keras.layers.Conv2D(32, 3, activation='relu', input_shape=(50,50,1)),
+    # keras.layers.Conv2D(32, 3, activation='relu'),
+    # # keras.layers.Conv2D(16, 3, activation='relu'),
+    keras.layers.MaxPool2D(3,3),
     # keras.layers.Dropout(0.5),
     keras.layers.Flatten(),
     keras.layers.Dense(128, activation='relu'),
@@ -89,16 +87,15 @@ CNN = keras.Sequential([
 
 CNN.compile(loss='binary_crossentropy',
             optimizer='adam',
-            metrics=['accuracy'])
+            metrics=['binary_accuracy'])
 
-CNN.fit(x_training_set, y_training_set, epochs=5, batch_size=32)
+CNN.fit(x_training_set, y_training_set, epochs=5, batch_size=32, validation_split = 0.10)
 
-# CNN.evaluate(x_test_set, y_test_set) # accuracy: 0.8300
+pred = CNN.predict(x_test_set)
 
-# pred = CNN.predict(x_test_set)
+pred = from_one_hot_enc(pred)
 
-# print(balanced_accuracy_score(y_test_set, pred))
-
+print(balanced_accuracy_score(y_test_set, pred))
 
 
 '''

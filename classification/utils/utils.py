@@ -22,7 +22,7 @@ def from_one_hot_enc(arr):
     
     for element in arr:
 
-        if element[0]:
+        if element[0] > element[1]:
             arr_list.append(1)
         else:
             arr_list.append(0)
