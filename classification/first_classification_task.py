@@ -31,10 +31,11 @@ Evaluate data
 
 num_of_men, num_of_women = samples_in_class_count(y_data)
 
-print('Share of men:   ', num_of_men)
-print('Share of women: ', num_of_women)
-print('Did you just assume my gender?')
+total = num_of_men + num_of_women
 
+print('Share of men:   {:.2f}%'.format(num_of_men/total))
+print('Share of women: {:.2f}%'.format(num_of_women/total))
+print('Did you just assume my gender?')
 
 '''
 Show image
