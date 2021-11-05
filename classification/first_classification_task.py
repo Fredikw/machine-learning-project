@@ -9,6 +9,7 @@ from matplotlib.pyplot import show
 # from sklearn.neighbors import KNeighborsClassifier
 # from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import (GridSearchCV, cross_val_score, train_test_split)
+from sklearn.metrics import balanced_accuracy_score
 from tensorflow import keras
 
 
@@ -34,8 +35,8 @@ Show image
 #     plt.imshow(img,cmap='gray')
 #     show()
 
-# imshow(x_data[20])
-
+# print(y_data[1964])
+# imshow(x_data[1964])
 
 '''
 Classification models
@@ -92,7 +93,12 @@ CNN.compile(loss='binary_crossentropy',
 
 CNN.fit(x_training_set, y_training_set, epochs=5, batch_size=32)
 
-CNN.evaluate(x_test_set, y_test_set) # accuracy: 0.8300
+# CNN.evaluate(x_test_set, y_test_set) # accuracy: 0.8300
+
+# pred = CNN.predict(x_test_set)
+
+# print(balanced_accuracy_score(y_test_set, pred))
+
 
 
 '''
