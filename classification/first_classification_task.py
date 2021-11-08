@@ -1,5 +1,5 @@
 from os import getcwd
-from utils.utils import *
+from utils import *
 
 import numpy as np
 import pandas as pd
@@ -10,7 +10,6 @@ from matplotlib.pyplot import show
 # from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import (GridSearchCV, cross_val_score, train_test_split)
 from sklearn.metrics import balanced_accuracy_score
-from tensorflow import keras
 
 
 '''
@@ -75,40 +74,7 @@ Classification models
 # MLP_score = cross_val_score(MLP, x_data, y_data, scoring='accuracy', cv=5)
 
 
-# # CNN classifier
-
-x_training_set = reshape_images(x_training_set)
-x_training_set = x_training_set.reshape(5823,50,50,1)
-
-y_training_set = to_one_hot_enc(y_training_set)
-
-x_test_set = reshape_images(x_test_set)
-x_test_set = x_test_set.reshape(647,50,50,1)
-
-CNN = keras.Sequential([
-    keras.layers.Conv2D(32, 3, activation='relu', input_shape=(50,50,1)),
-    # keras.layers.Conv2D(32, 3, activation='relu'),
-    # # keras.layers.Conv2D(16, 3, activation='relu'),
-    keras.layers.MaxPool2D(3,3),
-    # keras.layers.Dropout(0.5),
-    keras.layers.Flatten(),
-    keras.layers.Dense(128, activation='relu'),
-    keras.layers.Dense(2, activation='softmax')
-])
-
-# TODO implement early stopping
-
-CNN.compile(loss='binary_crossentropy',
-            optimizer='adam',
-            metrics=['binary_accuracy'])
-
-CNN.fit(x_training_set, y_training_set, epochs=5, batch_size=32, validation_split = 0.10)
-
-pred = CNN.predict(x_test_set)
-
-pred = from_one_hot_enc(pred)
-
-print(balanced_accuracy_score(y_test_set, pred))
+# # CNN classifier - Se cnn.ipynb for final implementation
 
 
 '''
@@ -157,6 +123,7 @@ confusion matrix
 # predict_training  = SGD.predict(x_training_set)
 # predict_test      = SGD.predict(x_test_set)
 
+# TODO Confusion matrix on the wrong format 
 # # print(confusion_matrix(y_training_set, predict_training, labels=[0.0, 1.0]))
 # # print(confusion_matrix(y_test_set, predict_test, labels=[0.0, 1.0]))
 
