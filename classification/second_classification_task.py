@@ -96,7 +96,7 @@ def show_img(img):
 
 print(y_data[10])
 
-show_img(x_data[10][0])
+show_img(x_data[10])
 
 # for idx, img in enumerate(y_data):
     
