@@ -6,6 +6,7 @@ import numpy as np
 
 from matplotlib.pyplot import show, imshow
 
+
 def to_one_hot_enc(arr):
     
     one_hot_enc = []
@@ -57,10 +58,45 @@ def show_img(img):
     show()
 
 
-'''
-Preparing data 
+def get_indices(arr, val):
+    idxs = np.where(arr == val)[0]
+    return idxs
+
+
+def balance_set(x_data, y_data):
+
+  occurrence_lst = num_samples_in_classes(y_data)
+
+  max_samples_of_class = max(occurrence_lst)
+
+  y_data_balanced = []
+  x_data_balanced = []
+
+  for clas, occurrence in enumerate(occurrence_lst):
+  
+    sample_idxs = get_indices(y_data, clas)
+
+    multiplier = int(max_samples_of_class/occurrence)
+  
+    for sample_idx in sample_idxs:
+
+      temp_lst_x = [x_data[sample_idx]]*multiplier
+      temp_lst_y = [y_data[sample_idx]]*multiplier
+
+      x_data_balanced += temp_lst_x
+      y_data_balanced += temp_lst_y
+
+  x_data_balanced = np.array(x_data_balanced)
+  y_data_balanced = np.array(y_data_balanced)
+  
+  return x_data_balanced, y_data_balanced
+
 
 '''
+Loading and reading data 
+
+'''
+
 import numpy as np
 from os import getcwd
 
@@ -87,12 +123,19 @@ y_data = np.load(getcwd() + "/training_set/Ytrain_Classification_Part2.npy") # y
 # # Share of Class 4: 16.41%
 
 
-
+'''
+Prepare data
 
 '''
-confusion matrix
+from imblearn.over_sampling import SMOTE
 
-'''
+# # Add copies of underrepresented classes - naive approach
 
-# TODO
+# x_data_balanced, y_data_balanced = balance_set(x_data, y_data)
 
+
+# # Add synthetic samples with SMOTE - not an popular in image processing
+
+sm = SMOTE(random_state=42)
+
+x_smote, y_smote = sm.fit_resample(x_data, y_data)
