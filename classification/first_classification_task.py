@@ -28,7 +28,7 @@ Evaluate data
 
 '''
 
-# num_of_men, num_of_women = samples_in_class_count(y_data)
+# num_of_men, num_of_women = num_samples_in_classes(y_data)
 
 # total = num_of_men + num_of_women
 

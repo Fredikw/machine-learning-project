@@ -41,7 +41,7 @@ def reshape_images(arr):
     return np.array(img_list)
 
 
-def samples_in_class_count(arr):
+def num_samples_in_classes(arr):
 
     samples_in_class = np.bincount(arr.astype(int))
 
